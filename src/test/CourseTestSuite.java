@@ -67,5 +67,19 @@ public class CourseTestSuite {
 								true // enforcePrereqs)
 								);
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void noGradeElementsThrowsException() {
+		interactor.createCourse(
+								"clerk", // user
+								"CS", // title,
+								110022, // code
+								23, // capsize
+								false, // hasAFinal
+								0, // numberOfAssignments,
+								0, // numberOfMidterms,
+								true // enforcePrereqs)
+								);
+	}
 
 }
