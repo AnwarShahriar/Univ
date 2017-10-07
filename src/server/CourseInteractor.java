@@ -1,6 +1,12 @@
 package server;
 
+import org.apache.log4j.Logger;
+
+import utilities.Trace;
+
 public class CourseInteractor {
+	
+	Logger logger = Trace.getInstance().getLogger(this);
 	University versity;
 	
 	public CourseInteractor(University versity) {
@@ -25,6 +31,7 @@ public class CourseInteractor {
 		if (versity.hasCourseExist(code)) 
 			throw new IllegalArgumentException("Course already exist");
 		
+		logger.info(String.format("Course is created with title %s and capsize %d", title, capsize));
 		Course course = versity.createCourse(title, capsize);
 		course.setCode(code);
 		course.setHasAFinal(hasAFinal);
