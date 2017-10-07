@@ -54,6 +54,18 @@ public class CourseTestSuite {
 								);
 	}
 	
-	
+	@Test(expected = IllegalArgumentException.class)
+	public void capSizeLowerOrEqualThan25ThrowsException() {
+		interactor.createCourse(
+								"clerk", // user
+								"CS", // title,
+								110022, // code
+								23, // capsize
+								true, // hasAFinal
+								2, // numberOfAssignments,
+								1, // numberOfMidterms,
+								true // enforcePrereqs)
+								);
+	}
 
 }
