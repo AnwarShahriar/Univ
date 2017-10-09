@@ -8,4 +8,88 @@
 @2017-10-07 21:53:38 INFO  CourseInteractor:34 - Course is created with title CS and capsize 26
 @2017-10-07 21:53:57 INFO  CourseInteractor:34 - Course is created with title CS and capsize 26
 @2017-10-07 21:57:05 INFO  CourseInteractor:34 - Course is created with title CS and capsize 26
+@2017-10-10 00:08:18 INFO  LibServer:26 - Binding to port 5050
+@2017-10-10 00:08:18 INFO  LibServer:51 - Waiting for a client ...
+@2017-10-10 00:08:18 INFO  LibServer:40 - Server started: ServerSocket[addr=0.0.0.0/0.0.0.0,localport=5050] 10
+@2017-10-10 00:08:27 INFO  LibServer:60 - Client accepted : Client Address : [/127.0.0.1:56599] Client Socket: [56599 ]
+
+@2017-10-10 00:08:27 INFO  LibServer:51 - Waiting for a client ...
+@2017-10-10 00:08:27 INFO  ServerThread:53 - Class: ServerThread: Server Thread Running__56599
+@2017-10-10 00:08:27 INFO  LibClient:28 - 56599 : Connected to server: /127.0.0.1
+@2017-10-10 00:08:27 INFO  LibClient:29 - 56599 : Connected to portid: 56599
+@2017-10-10 00:08:38 INFO  LibServer:90 - Input from 127.0.0.1:56599 
+@2017-10-10 00:08:38 INFO  LibServer:107 - Output to 127.0.0.1:56599 Who Are you?Clerk or User?
+
+@2017-10-10 00:08:47 INFO  LibServer:90 - Input from 127.0.0.1:56599 clerk
+@2017-10-10 00:08:47 INFO  LibServer:99 - Output to 127.0.0.1:56599 Please Input The Password:
+
+@2017-10-10 00:08:51 INFO  LibServer:90 - Input from 127.0.0.1:56599 admin
+@2017-10-10 00:08:51 INFO  LibServer:99 - Output to 127.0.0.1:56599 What can I do for you?Menu:Create Student/Course
+
+@2017-10-10 00:09:00 INFO  LibServer:90 - Input from 127.0.0.1:56599 create student
+@2017-10-10 00:09:00 INFO  LibServer:99 - Output to 127.0.0.1:56599 Please Input Student Info:
+
+@2017-10-10 00:09:02 INFO  LibServer:90 - Input from 127.0.0.1:56599 sdsdsd
+@2017-10-10 00:09:02 INFO  LibServer:99 - Output to 127.0.0.1:56599 Your input should in this format:'username,password'
+
+@2017-10-10 00:09:14 INFO  LibServer:90 - Input from 127.0.0.1:56599 sdsd,sdsd
+@2017-10-10 00:09:14 INFO  LibServer:99 - Output to 127.0.0.1:56599 Your input should in this format:'username,password'
+
+@2017-10-10 00:09:22 INFO  ServerThread:60 - Class: ServerThread: Exception thrown : Connection reset 
+
+@2017-10-10 00:11:01 INFO  LibServer:60 - Client accepted : Client Address : [/127.0.0.1:56606] Client Socket: [56606 ]
+
+@2017-10-10 00:11:01 INFO  LibServer:51 - Waiting for a client ...
+@2017-10-10 00:11:01 INFO  ServerThread:53 - Class: ServerThread: Server Thread Running__56606
+@2017-10-10 00:11:01 INFO  LibClient:28 - 56606 : Connected to server: /127.0.0.1
+@2017-10-10 00:11:01 INFO  LibClient:29 - 56606 : Connected to portid: 56606
+@2017-10-10 00:11:03 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:11:03 INFO  LibServer:107 - Output to 127.0.0.1:56606 Who Are you?Clerk or User?
+
+@2017-10-10 00:11:07 INFO  LibServer:90 - Input from 127.0.0.1:56606 clerk
+@2017-10-10 00:11:07 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please Input The Password:
+
+@2017-10-10 00:11:11 INFO  LibServer:90 - Input from 127.0.0.1:56606 admin
+@2017-10-10 00:11:11 INFO  LibServer:99 - Output to 127.0.0.1:56606 What can I do for you?Menu:Create Student/Course
+
+@2017-10-10 00:11:16 INFO  LibServer:90 - Input from 127.0.0.1:56606 create student
+@2017-10-10 00:11:16 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please Input Student Info:
+
+@2017-10-10 00:11:23 INFO  LibServer:90 - Input from 127.0.0.1:56606 anwar@gmail.com,1234
+@2017-10-10 00:11:23 INFO  String:21 - Operation:Initialize StudentTable;StudentTable: null
+@2017-10-10 00:11:23 INFO  LibServer:99 - Output to 127.0.0.1:56606 Success!
+
+@2017-10-10 00:11:25 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:11:25 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please select from the menu.Menu:Create Student/Course
+
+@2017-10-10 00:11:36 INFO  LibServer:90 - Input from 127.0.0.1:56606 create student
+@2017-10-10 00:11:36 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please Input Student Info:
+
+@2017-10-10 00:11:38 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:11:38 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:11:39 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:11:39 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:11:40 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:11:40 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:11:42 INFO  LibServer:90 - Input from 127.0.0.1:56606 menu
+@2017-10-10 00:11:42 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:11:45 INFO  LibServer:90 - Input from 127.0.0.1:56606 main
+@2017-10-10 00:11:45 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:11:52 INFO  LibServer:90 - Input from 127.0.0.1:56606 anwar@gmail.com
+@2017-10-10 00:11:52 INFO  LibServer:99 - Output to 127.0.0.1:56606 Your input should in this format:'username,password'
+
+@2017-10-10 00:12:01 INFO  LibServer:90 - Input from 127.0.0.1:56606 anwar@gmail.com,234
+@2017-10-10 00:12:01 INFO  LibServer:99 - Output to 127.0.0.1:56606 Success!
+
+@2017-10-10 00:12:02 INFO  LibServer:90 - Input from 127.0.0.1:56606 
+@2017-10-10 00:12:02 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please select from the menu.Menu:Create Student/Course
+
+@2017-10-10 00:12:05 INFO  LibServer:90 - Input from 127.0.0.1:56606 create course
+@2017-10-10 00:12:05 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please select from the menu.Menu:Create Student/Course
+
 @
