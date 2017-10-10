@@ -15,7 +15,7 @@ public class CourseTestSuite {
 	
 	@BeforeClass
 	public static void setup() {
-		versity = new University();
+		versity = University.getInstance();
 	}
 
 	@Before

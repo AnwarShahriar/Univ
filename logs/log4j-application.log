@@ -92,4 +92,5 @@
 @2017-10-10 00:12:05 INFO  LibServer:90 - Input from 127.0.0.1:56606 create course
 @2017-10-10 00:12:05 INFO  LibServer:99 - Output to 127.0.0.1:56606 Please select from the menu.Menu:Create Student/Course
 
+@2017-10-10 01:59:47 INFO  CourseInteractor:34 - Course is created with title CS and capsize 26
 @
