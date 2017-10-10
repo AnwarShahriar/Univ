@@ -9,12 +9,14 @@ import server.CourseTable;
 public class Student {
 	private String name;
 	private int studentNumber;
+	private boolean fullTime;
 	
 	private List<Integer> courseIds = new ArrayList<>();
 	
 	public Student(String name, int studentNumber) {
 		this.name = name;
 		this.studentNumber = studentNumber;
+		fullTime = true;
 	}
 
 	public void registerCourse(Course course) {
@@ -23,6 +25,22 @@ public class Student {
 
 	public List<Course> currentCourses() {
 		return CourseTable.getInstance().getCourses(courseIds);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getStudentNumber() {
+		return studentNumber;
+	}
+
+	public boolean isFullTime() {
+		return fullTime;
+	}
+	
+	public void setFullTime(boolean fullTime) {
+		this.fullTime = fullTime;
 	}
 
 }

@@ -51,4 +51,29 @@ public class StudentTestSuite {
 		
 		assertEquals(true, exist);
 	}
+	
+	@Test
+	public void studentHasName() {
+		Student student = versity.createStudent("John Doe", 123);
+		assertEquals("John Doe", student.getName());
+	}
+	
+	@Test
+	public void studentHasStudentNumber() {
+		Student student = versity.createStudent("John Doe", 123);
+		assertEquals(123, student.getStudentNumber());
+	}
+	
+	@Test
+	public void studentIsFullTimeByDefault() {
+		Student student = versity.createStudent("John Doe", 123);
+		assertEquals(true, student.isFullTime());
+	}
+	
+	@Test
+	public void studentIsPartTime() {
+		Student student = versity.createStudent("John Doe", 123);
+		student.setFullTime(false);
+		assertEquals(false, student.isFullTime());
+	}
 }
