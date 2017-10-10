@@ -17,7 +17,9 @@ public class University {
 	}
 	
 	public Course createCourse(String title, int capsize) {
-		return new Course(title, capsize);
+		Course course = new Course(title, capsize);
+		CourseTable.getInstance().add(course);
+		return course;
 	}
 
 	public boolean hasCourseExist(int code) {
