@@ -3,8 +3,6 @@ package server;
 import java.util.ArrayList;
 import java.util.List;
 
-import test.Student;
-
 public class StudentTable {
 	
 	private static final StudentTable INSTANCE = new StudentTable();

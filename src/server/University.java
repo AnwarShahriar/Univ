@@ -3,10 +3,13 @@ package server;
 import java.util.ArrayList;
 import java.util.List;
 
-import test.Student;
+import org.apache.log4j.Logger;
+
+import utilities.Trace;
 
 public class University {
 	private static final University INSTANCE = new University();
+	Logger logger = Trace.getInstance().getLogger(this);
 	
 	private List<Course> courses = new ArrayList<>();
 	
@@ -35,6 +38,15 @@ public class University {
 		Student student = new Student(name, studentNumber);
 		StudentTable.getInstance().add(student);
 		return student;
+	}
+
+	public void registerStudentForCourse(Student student, Course course) {
+		try {
+			student.registerCourse(course);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			throw e;
+		}
 	}
 
 }

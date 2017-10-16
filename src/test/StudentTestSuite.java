@@ -12,6 +12,7 @@ import org.junit.Test;
 import server.Course;
 import server.CourseInteractor;
 import server.CourseTable;
+import server.Student;
 import server.StudentTable;
 import server.University;
 
@@ -80,6 +81,52 @@ public class StudentTestSuite {
 		Student student = versity.createStudent("John Doe", 123);
 		student.setFullTime(false);
 		assertEquals(false, student.isFullTime());
+	}
+	
+	@Test
+	public void studentRegistersForACourseDoesNotThrowException() {
+		Student student = new Student("John", 23);
+		Course course = CourseTable.getInstance().findCourseByCode(111110);
+		versity.registerStudentForCourse(student, course);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void duplicateCourseRegistrationThrowsException() {
+		Student student = new Student("John", 23);
+		Course course = CourseTable.getInstance().findCourseByCode(111110);
+		
+		versity.registerStudentForCourse(student, course);
+		versity.registerStudentForCourse(student, course);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void courseRegistrationAttemptMoreThan4ThrowsExceptionForFullTimeStudent() {
+		Student student = new Student("John", 23);
+		Course course1 = CourseTable.getInstance().findCourseByCode(111110);
+		Course course2 = CourseTable.getInstance().findCourseByCode(111111);
+		Course course3 = CourseTable.getInstance().findCourseByCode(111112);
+		Course course4 = CourseTable.getInstance().findCourseByCode(111113);
+		Course course5 = CourseTable.getInstance().findCourseByCode(111114);
+		
+		versity.registerStudentForCourse(student, course1);
+		versity.registerStudentForCourse(student, course2);
+		versity.registerStudentForCourse(student, course3);
+		versity.registerStudentForCourse(student, course4);
+		versity.registerStudentForCourse(student, course5);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void courseRegistrationAttemptMoreThan2ThrowsExceptionForPartTimeStudent() {
+		Student student = new Student("John", 23);
+		student.setFullTime(false);
+		
+		Course course1 = CourseTable.getInstance().findCourseByCode(111110);
+		Course course2 = CourseTable.getInstance().findCourseByCode(111111);
+		Course course3 = CourseTable.getInstance().findCourseByCode(111112);
+		
+		versity.registerStudentForCourse(student, course1);
+		versity.registerStudentForCourse(student, course2);
+		versity.registerStudentForCourse(student, course3);
 	}
 	
 	private void prepareDummyCourse() {

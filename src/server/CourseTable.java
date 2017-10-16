@@ -34,4 +34,13 @@ public class CourseTable {
 	public void clear() {
 		courses.clear();
 	}
+	
+	public Course findCourseByCode(int code) {
+		for (Course c : courses) {
+			if (c.getCode() == code) {
+				return c;
+			}
+		}
+		return null;
+	}
 }
