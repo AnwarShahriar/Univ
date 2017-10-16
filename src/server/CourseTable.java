@@ -30,4 +30,8 @@ public class CourseTable {
 		}
 		return res;
 	}
+	
+	public void clear() {
+		courses.clear();
+	}
 }

@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import server.Course;
 import server.CourseInteractor;
+import server.CourseTable;
 import server.StudentTable;
 import server.University;
 
@@ -25,6 +27,9 @@ public class StudentTestSuite {
 	@Before
 	public void prepare() {
 		StudentTable.getInstance().clear();
+		CourseTable.getInstance().clear();
+		
+		prepareDummyCourse();
 	}
 	
 	@Test
@@ -75,5 +80,14 @@ public class StudentTestSuite {
 		Student student = versity.createStudent("John Doe", 123);
 		student.setFullTime(false);
 		assertEquals(false, student.isFullTime());
+	}
+	
+	private void prepareDummyCourse() {
+		CourseInteractor courseInteractor = new CourseInteractor(versity);
+		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false);
+		courseInteractor.createCourse("cleark", "CS102", 111111, 26, true, 2, 1, false);
+		courseInteractor.createCourse("cleark", "CS103", 111112, 26, true, 2, 1, false);
+		courseInteractor.createCourse("cleark", "CS104", 111113, 26, true, 2, 1, false);
+		courseInteractor.createCourse("cleark", "CS105", 111114, 26, true, 2, 1, false);
 	}
 }
