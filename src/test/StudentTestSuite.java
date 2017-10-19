@@ -43,7 +43,7 @@ public class StudentTestSuite {
 	public void studentRegistersCourse() {
 		Student student = versity.createStudent("John Doe", 123);
 		CourseInteractor interactor = new CourseInteractor(versity);
-		Course course = interactor.createCourse("cleark", "CS101", 101000, 27, true, 2, 1, false);
+		Course course = interactor.createCourse("cleark", "CS101", 101000, 27, true, 2, 1, false, false);
 		student.registerCourse(course);
 		List<Course> courses = student.currentCourses();
 		
@@ -131,10 +131,10 @@ public class StudentTestSuite {
 	
 	private void prepareDummyCourse() {
 		CourseInteractor courseInteractor = new CourseInteractor(versity);
-		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false);
-		courseInteractor.createCourse("cleark", "CS102", 111111, 26, true, 2, 1, false);
-		courseInteractor.createCourse("cleark", "CS103", 111112, 26, true, 2, 1, false);
-		courseInteractor.createCourse("cleark", "CS104", 111113, 26, true, 2, 1, false);
-		courseInteractor.createCourse("cleark", "CS105", 111114, 26, true, 2, 1, false);
+		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false, false);
+		courseInteractor.createCourse("cleark", "CS102", 111111, 26, true, 2, 1, false, false);
+		courseInteractor.createCourse("cleark", "CS103", 111112, 26, true, 2, 1, false, false);
+		courseInteractor.createCourse("cleark", "CS104", 111113, 26, true, 2, 1, false, false);
+		courseInteractor.createCourse("cleark", "CS105", 111114, 26, true, 2, 1, false, true);
 	}
 }

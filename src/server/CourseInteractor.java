@@ -21,18 +21,19 @@ public class CourseInteractor {
 			boolean hasAFinal, 
 			int numberOfAssignments, 
 			int numberOfMidTerms, 
-			boolean enforcePrereqs
+			boolean enforcePrereqs,
+			boolean isProjectCourse
 		) {
 		
 		validateCode(code);
-		validateGradeElems(hasAFinal, numberOfAssignments, numberOfMidTerms);
+		validateGradeElems(hasAFinal, numberOfAssignments, numberOfMidTerms, isProjectCourse);
 		validateCapsize(capsize);
 		
 		if (versity.hasCourseExist(code)) 
 			throw new IllegalArgumentException("Course already exist");
 		
 		logger.info(String.format("Course is created with title %s and capsize %d", title, capsize));
-		Course course = versity.createCourse(title, capsize);
+		Course course = versity.createCourse(title, capsize, isProjectCourse);
 		course.setCode(code);
 		course.setHasAFinal(hasAFinal);
 		course.setNumberOfAssignments(numberOfAssignments);
@@ -47,8 +48,8 @@ public class CourseInteractor {
 			throw new IllegalArgumentException("capsize must be greater than 25");
 	}
 
-	private void validateGradeElems(boolean hasAFinal, int numberOfAssignments, int numberOfMidTerms) {
-		if (!hasAFinal && numberOfAssignments == 0 && numberOfMidTerms == 0)
+	private void validateGradeElems(boolean hasAFinal, int numberOfAssignments, int numberOfMidTerms, boolean isProjectCourse) {
+		if (!hasAFinal && numberOfAssignments == 0 && numberOfMidTerms == 0 && !isProjectCourse)
 			throw new IllegalArgumentException("There must be one grade element");
 	}
 

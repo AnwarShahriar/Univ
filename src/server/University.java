@@ -19,8 +19,8 @@ public class University {
 		return INSTANCE;
 	}
 	
-	public Course createCourse(String title, int capsize) {
-		Course course = new Course(title, capsize);
+	public Course createCourse(String title, int capsize, boolean hasProject) {
+		Course course = hasProject? new ProjectCourse(title, capsize): new Course(title, capsize);
 		CourseTable.getInstance().add(course);
 		return course;
 	}
