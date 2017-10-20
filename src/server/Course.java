@@ -1,7 +1,9 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Course {
@@ -19,6 +21,8 @@ public class Course {
 	
 	List<Student> students = new ArrayList<>();
 	List<Integer> preRequisites = new ArrayList<>();
+	
+	Map<Integer, Integer> studentIdVsMarksMap = new HashMap<>();
 	
 	public Course(String title, int capsize) {
 		this.title = title;
@@ -131,6 +135,21 @@ public class Course {
 
 	public boolean addPreRequisite(int courseCode) {
 		return preRequisites.add(courseCode);
+	}
+
+	public int markForStudent(Student student) {
+		if (!students.contains(student)) {
+			String errMsg = String.format("Student id %d is not registered in the course", student.getStudentNumber());
+			throw new IllegalArgumentException(errMsg);
+		}
+		
+		if (studentIdVsMarksMap.containsKey(student.getStudentNumber())) {
+			return studentIdVsMarksMap.get(student.getStudentNumber());
+		}
+		
+		int mark = ThreadLocalRandom.current().nextInt(80, 98);
+		studentIdVsMarksMap.put(student.getStudentNumber(), mark);
+		return mark;
 	}
 
 }
