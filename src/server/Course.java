@@ -18,6 +18,7 @@ public class Course {
 	protected int finalWeight;
 	
 	List<Student> students = new ArrayList<>();
+	List<Integer> preRequisites = new ArrayList<>();
 	
 	public Course(String title, int capsize) {
 		this.title = title;
@@ -47,6 +48,14 @@ public class Course {
 
 	public void enforcePrereqs(boolean enforcePrereqs) {
 		this.enforcePrereqs = enforcePrereqs;
+	}
+	
+	public List<Student> students() {
+		return students;
+	}
+	
+	public List<Integer> preRequisites() {
+		return preRequisites;
 	}
 	
 	public int weightOfAssignment(int assignmentNumber) {
@@ -118,6 +127,10 @@ public class Course {
 
 	public boolean removeStudent(Student student) {
 		return students.remove(student);
+	}
+
+	public boolean addPreRequisite(int courseCode) {
+		return preRequisites.add(courseCode);
 	}
 
 }

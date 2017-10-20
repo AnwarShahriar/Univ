@@ -301,4 +301,43 @@ public class CourseTestSuite {
 									);
 		assertEquals(false, course.hasProject());
 	}
+	
+	@Test
+	public void courseHasStudents() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		course.addStudent(new Student("One", 1));
+		course.addStudent(new Student("Two", 2));
+		course.addStudent(new Student("Three", 3));
+		
+		assertEquals(3, course.students().size());
+	}
+	
+	@Test
+	public void coursehasPreRequisites() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		course.addPreRequisite(110023);
+		course.addPreRequisite(110024);
+		
+		assertEquals(2, course.preRequisites().size());
+	}
 }
