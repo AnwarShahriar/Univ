@@ -395,4 +395,62 @@ public class CourseTestSuite {
 		
 		assertEquals(true, markForStudent == againMarkForStudent);
 	}
+	
+	@Test
+	public void courseWithSameCourseIdIsEqual() {
+		Course course1 = interactor.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				2, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		
+		Course course2 = interactor.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				2, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		
+		assertEquals(course1, course2);
+	}
+	
+	@Test
+	public void courseWithSameCourseIdHasSameHashCode() {
+		Course course1 = interactor.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				2, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		
+		Course course2 = interactor.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				2, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		
+		assertEquals(course1.hashCode(), course2.hashCode());
+	}
 }

@@ -129,6 +129,13 @@ public class StudentTestSuite {
 		versity.registerStudentForCourse(student, course3);
 	}
 	
+	@Test
+	public void studentWithSameStudentNumberHasSameHashCode() {
+		Student student1 = new Student("John", 23);
+		Student student2 = new Student("John", 23);
+		assertEquals(student1.hashCode(), student2.hashCode());
+	}
+	
 	private void prepareDummyCourse() {
 		CourseInteractor courseInteractor = new CourseInteractor(versity);
 		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false, false);
