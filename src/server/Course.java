@@ -116,4 +116,8 @@ public class Course {
 		return students.add(student);
 	}
 
+	public boolean removeStudent(Student student) {
+		return students.remove(student);
+	}
+
 }
