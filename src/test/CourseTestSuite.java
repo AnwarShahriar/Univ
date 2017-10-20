@@ -8,6 +8,7 @@ import org.junit.Test;
 import server.Course;
 import server.CourseInteractor;
 import server.ProjectCourse;
+import server.Student;
 import server.University;
 
 public class CourseTestSuite {
@@ -156,4 +157,81 @@ public class CourseTestSuite {
 		assertEquals(100, totalWeight);
 	}
 
+	@Test
+	public void addStudentSucceed() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		boolean success = course.addStudent(new Student("John", 123));
+		assertEquals(true, success);
+	}
+	
+	@Test
+	public void duplicateAddStudentFails() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		course.addStudent(new Student("John", 123));
+		boolean failure = course.addStudent(new Student("John", 123));
+		assertEquals(false, failure);
+	}
+	
+	@Test
+	public void addStudentFailsWhenExceedsCapSize() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		for(int i = 0; i < 26; i++) {
+			String name = "Student " + i;
+			course.addStudent(new Student(name, i));
+		}
+		
+		String name = "Student 26";
+		boolean failure = course.addStudent(new Student(name, 26));
+		assertEquals(false, failure);
+	}
+	
+	@Test
+	public void courseIsFullWhenStudentReachesCapSize() {
+		Course course = interactor.createCourse(
+									"clerk", // user
+									"CS", // title,
+									110022, // code
+									26, // capsize
+									true, // hasAFinal
+									2, // numberOfAssignments,
+									2, // numberOfMidterms,
+									true, // enforcePrereqs)
+									false // isProjectCourse
+									);
+		for(int i = 0; i < 26; i++) {
+			String name = "Student " + i;
+			course.addStudent(new Student(name, i));
+		}
+		assertEquals(true, course.isFull());
+	}
 }

@@ -1,5 +1,7 @@
 package server;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Course {
@@ -14,6 +16,8 @@ public class Course {
 	protected int[] assignmentWeights;
 	protected int[] midTermWeights;
 	protected int finalWeight;
+	
+	List<Student> students = new ArrayList<>();
 	
 	public Course(String title, int capsize) {
 		this.title = title;
@@ -65,6 +69,10 @@ public class Course {
 		return code;
 	}
 	
+	public boolean isFull() {
+		return students.size() == capsize;
+	}
+	
 	protected void generateWeight() {
 		int remainWeightToAssign = 100;
 		if (numberOfAssignments > 0) {
@@ -101,6 +109,11 @@ public class Course {
 		totalWeight -= totalAllotedAssignmentWeight;
 		
 		return totalWeight;
+	}
+
+	public boolean addStudent(Student student) {
+		if (students.contains(student) || isFull()) return false;
+		return students.add(student);
 	}
 
 }
