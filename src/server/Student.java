@@ -9,6 +9,7 @@ public class Student {
 	private boolean fullTime;
 	private int maxCourseCount;
 	
+	private List<Course> selectedCourses = new ArrayList<>();
 	private List<Course> completedCourses = new ArrayList<>();
 	private List<Course> registeredCourses = new ArrayList<>();
 	
@@ -19,6 +20,11 @@ public class Student {
 	}
 
 	public void registerCourse(Course course) {
+		if (!selectedCourses.contains(course)) {
+			String errMsg = String.format("Course %s is not on selected course list", course.title);
+			throw new IllegalStateException(errMsg);
+		}
+		
 		if (alreadyRegistered(course)) {
 			throw new IllegalStateException("Already registered for course");
 		}
@@ -27,6 +33,7 @@ public class Student {
 			throw new IllegalStateException(String.format("Max course count for %s student is %d", (fullTime ? "full time" : "part time"), maxCourseCount));
 		}
 		
+		selectedCourses.remove(course);
 		registeredCourses.add(course);
 	}
 
@@ -82,11 +89,30 @@ public class Student {
 			String errMsg = String.format("Course %s is not registered by Student %d", course.title, studentNumber);
 			throw new IllegalArgumentException(errMsg);
 		}
+		registeredCourses.remove(course);
 		completedCourses.add(course);
 	}
 
 	public List<Course> completedCourses() {
 		return completedCourses;
+	}
+
+	public void selectCourse(Course course) {
+		if (registeredCourses.contains(course)) {
+			String errMsg = String.format("Course %s is already registered and cannot be selected", course.title);
+			throw new IllegalArgumentException(errMsg);
+		}
+		
+		if (completedCourses.contains(course)) {
+			String errMsg = String.format("Course %s is already completed and cannot be selected", course.title);
+			throw new IllegalArgumentException(errMsg);
+		}
+		
+		selectedCourses.add(course);
+	}
+
+	public List<Course> selectedCourses() {
+		return selectedCourses;
 	}
 	
 }

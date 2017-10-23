@@ -1,14 +1,10 @@
 package test;
 
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import server.Course;
 import server.CourseInteractor;
 import server.CourseTable;
@@ -44,18 +40,10 @@ public class StudentTestSuite {
 		Student student = versity.createStudent("John Doe", 123);
 		CourseInteractor interactor = new CourseInteractor(versity);
 		Course course = interactor.createCourse("cleark", "CS101", 101000, 27, true, 2, 1, false, false);
+		student.selectCourse(course);
 		student.registerCourse(course);
 		List<Course> courses = student.currentCourses();
-		
-		boolean exist = false;
-		for (Course c : courses) {
-			if (c.getCode() == course.getCode()) {
-				exist = true;
-				break;
-			}
-		}
-		
-		assertEquals(true, exist);
+		assertEquals(course.getCode(), courses.get(0).getCode());
 	}
 	
 	@Test
@@ -87,6 +75,7 @@ public class StudentTestSuite {
 	public void studentRegistersForACourseDoesNotThrowException() {
 		Student student = new Student("John", 23);
 		Course course = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(course);
 		versity.registerStudentForCourse(student, course);
 	}
 	
@@ -94,7 +83,7 @@ public class StudentTestSuite {
 	public void duplicateCourseRegistrationThrowsException() {
 		Student student = new Student("John", 23);
 		Course course = CourseTable.getInstance().findCourseByCode(111110);
-		
+		student.selectCourse(course);
 		versity.registerStudentForCourse(student, course);
 		versity.registerStudentForCourse(student, course);
 	}
@@ -107,6 +96,12 @@ public class StudentTestSuite {
 		Course course3 = CourseTable.getInstance().findCourseByCode(111112);
 		Course course4 = CourseTable.getInstance().findCourseByCode(111113);
 		Course course5 = CourseTable.getInstance().findCourseByCode(111114);
+		
+		student.selectCourse(course1);
+		student.selectCourse(course2);
+		student.selectCourse(course3);
+		student.selectCourse(course4);
+		student.selectCourse(course5);
 		
 		versity.registerStudentForCourse(student, course1);
 		versity.registerStudentForCourse(student, course2);
@@ -123,6 +118,10 @@ public class StudentTestSuite {
 		Course course1 = CourseTable.getInstance().findCourseByCode(111110);
 		Course course2 = CourseTable.getInstance().findCourseByCode(111111);
 		Course course3 = CourseTable.getInstance().findCourseByCode(111112);
+		
+		student.selectCourse(course1);
+		student.selectCourse(course2);
+		student.selectCourse(course3);
 		
 		versity.registerStudentForCourse(student, course1);
 		versity.registerStudentForCourse(student, course2);
@@ -142,6 +141,9 @@ public class StudentTestSuite {
 		Course c1 = CourseTable.getInstance().findCourseByCode(111110);
 		Course c2 = CourseTable.getInstance().findCourseByCode(111111);
 		
+		student.selectCourse(c1);
+		student.selectCourse(c2);
+		
 		student.registerCourse(c1);
 		student.registerCourse(c2);
 		
@@ -157,8 +159,68 @@ public class StudentTestSuite {
 		Course c1 = CourseTable.getInstance().findCourseByCode(111110);
 		Course c2 = CourseTable.getInstance().findCourseByCode(111111);
 		
+		student.selectCourse(c1);
+		student.selectCourse(c2);
+		
 		student.registerCourse(c1);
 		student.completedCourse(c2);
+	}
+	
+	@Test
+	public void selectCourseSucceed() {
+		Student student = new Student("John", 23);
+		Course c1 = CourseTable.getInstance().findCourseByCode(111110);
+		Course c2 = CourseTable.getInstance().findCourseByCode(111111);
+		
+		student.selectCourse(c1);
+		student.selectCourse(c2);
+		
+		assertEquals(2, student.selectedCourses().size());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void attemptsToSelectAlreadyRegisteredCourseThrowsException() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		student.selectCourse(c);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void attemptsToSelectAlreadyCompletedCourseThrowsException() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		student.completedCourse(c);
+		student.selectCourse(c);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void attemptsToRegisterCourseNotInSelectedCoursesThrowsException() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.registerCourse(c);
+	}
+	
+	@Test
+	public void completedCourseCannotBeOnRegisteresCourseList() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		student.completedCourse(c);
+		assertEquals(0, student.currentCourses().size());
+	}
+	
+	@Test
+	public void registeredCourseCannotBeOnSelectedCourseList() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		assertEquals(0, student.selectedCourses().size());
 	}
 	
 	private void prepareDummyCourse() {
