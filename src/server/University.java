@@ -5,13 +5,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import server.common.TermEventListener;
 import utilities.Trace;
 
-public class University {
+public class University implements TermEventListener {
 	private static final University INSTANCE = new University();
 	Logger logger = Trace.getInstance().getLogger(this);
 	
 	private List<Course> courses = new ArrayList<>();
+	
+	private TermState termState = TermState.NONE;
 	
 	private University() {}
 	
@@ -47,6 +50,38 @@ public class University {
 			logger.info(e.getMessage());
 			throw e;
 		}
+	}
+	
+	public enum TermState {
+		NONE,
+		CREATE_STUDENT_COURSE_STATE,
+		COURSE_REGISTRATION_STATE,
+		TERM_PROPERLY_STARTED_STATE,
+		TERM_END_STATE
+	}
+
+	public TermState getTermState() {
+		return termState;
+	}
+
+	@Override
+	public void onCreate() {
+		termState = TermState.CREATE_STUDENT_COURSE_STATE;
+	}
+
+	@Override
+	public void onRegistrationPossible() {
+		termState = TermState.COURSE_REGISTRATION_STATE;
+	}
+
+	@Override
+	public void onTermProperlyStarted() {
+		termState = TermState.TERM_PROPERLY_STARTED_STATE;
+	}
+
+	@Override
+	public void onTermEnded() {
+		termState = TermState.TERM_END_STATE;
 	}
 
 }
