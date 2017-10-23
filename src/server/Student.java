@@ -9,6 +9,7 @@ public class Student {
 	private boolean fullTime;
 	private int maxCourseCount;
 	
+	private List<Course> completedCourses = new ArrayList<>();
 	private List<Course> registeredCourses = new ArrayList<>();
 	
 	public Student(String name, int studentNumber) {
@@ -74,6 +75,18 @@ public class Student {
 		if (studentNumber != other.studentNumber)
 			return false;
 		return true;
+	}
+
+	public void completedCourse(Course course) {
+		if (!registeredCourses.contains(course)) { 
+			String errMsg = String.format("Course %s is not registered by Student %d", course.title, studentNumber);
+			throw new IllegalArgumentException(errMsg);
+		}
+		completedCourses.add(course);
+	}
+
+	public List<Course> completedCourses() {
+		return completedCourses;
 	}
 	
 }

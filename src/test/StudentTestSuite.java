@@ -136,6 +136,31 @@ public class StudentTestSuite {
 		assertEquals(student1.hashCode(), student2.hashCode());
 	}
 	
+	@Test
+	public void studentHasCompletedCourses() {
+		Student student = new Student("John", 23);
+		Course c1 = CourseTable.getInstance().findCourseByCode(111110);
+		Course c2 = CourseTable.getInstance().findCourseByCode(111111);
+		
+		student.registerCourse(c1);
+		student.registerCourse(c2);
+		
+		student.completedCourse(c1);
+		student.completedCourse(c2);
+		
+		assertEquals(2, student.completedCourses().size());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void attemptsToCompleteCourseNotInRegisteredCourseListThrowsException() {
+		Student student = new Student("John", 23);
+		Course c1 = CourseTable.getInstance().findCourseByCode(111110);
+		Course c2 = CourseTable.getInstance().findCourseByCode(111111);
+		
+		student.registerCourse(c1);
+		student.completedCourse(c2);
+	}
+	
 	private void prepareDummyCourse() {
 		CourseInteractor courseInteractor = new CourseInteractor(versity);
 		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false, false);
