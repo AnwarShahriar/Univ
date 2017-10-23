@@ -1,7 +1,9 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Student {
 	private String name;
@@ -12,6 +14,7 @@ public class Student {
 	private List<Course> selectedCourses = new ArrayList<>();
 	private List<Course> completedCourses = new ArrayList<>();
 	private List<Course> registeredCourses = new ArrayList<>();
+	private Map<Course, String> dropedCourseMap = new HashMap<>();
 	
 	public Student(String name, int studentNumber) {
 		this.name = name;
@@ -113,6 +116,19 @@ public class Student {
 
 	public List<Course> selectedCourses() {
 		return selectedCourses;
+	}
+
+	public boolean dropCourse(Course course) {
+		if (registeredCourses.contains(course)) {
+			registeredCourses.remove(course);
+			dropedCourseMap.put(course, "DR");
+			return true;
+		}
+		return false;
+	}
+
+	public boolean deRegisterCourse(Course course) {
+		return registeredCourses.remove(course);
 	}
 	
 }

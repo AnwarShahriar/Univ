@@ -223,6 +223,32 @@ public class StudentTestSuite {
 		assertEquals(0, student.selectedCourses().size());
 	}
 	
+	@Test
+	public void studentDropsCourse() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		assertEquals(true, student.dropCourse(c));
+	}
+	
+	@Test
+	public void studentCannotDropUnregisteredCourses() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		assertEquals(false, student.dropCourse(c));
+	}
+	
+	@Test
+	public void studentDeregisterCourse() {
+		Student student = new Student("John", 23);
+		Course c = CourseTable.getInstance().findCourseByCode(111110);
+		student.selectCourse(c);
+		student.registerCourse(c);
+		assertEquals(true, student.deRegisterCourse(c));
+	}
+	
 	private void prepareDummyCourse() {
 		CourseInteractor courseInteractor = new CourseInteractor(versity);
 		courseInteractor.createCourse("cleark", "CS101", 111110, 26, true, 2, 1, false, false);
