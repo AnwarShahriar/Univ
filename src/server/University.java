@@ -1,5 +1,6 @@
 package server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -186,6 +187,18 @@ public class University implements TermEventListener {
 		} else {
 			String errMsg = "Course can be deregistered upto two weeks after term has started properly";
 			throw new IllegalStateException(errMsg);
+		}
+	}
+
+	public void deleteStudent(Student student) {
+		StudentTable.getInstance().students.remove(student);
+		
+		List<Course> courses = new ArrayList<>();
+		courses.addAll(student.currentCourses());
+		courses.addAll(student.selectedCourses());
+		
+		for (Course c : courses) {
+			c.students().remove(student);
 		}
 	}
 }

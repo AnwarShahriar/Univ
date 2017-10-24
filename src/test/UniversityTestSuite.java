@@ -319,4 +319,29 @@ public class UniversityTestSuite {
 		simulator.twoWeeksPassesTillTermStarted();
 		versity.deregisterCourse(course, student);
 	}
+	
+	@Test
+	public void deleteStudentSucceeds() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		
+		simulator.termAllowCourseRegistration();
+		versity.registerStudentForCourse(student, course);
+		
+		versity.deleteStudent(student);
+		boolean deleted = !versity.students().contains(student) &&
+				!course.students().contains(student);
+		
+		assertEquals(true, deleted);
+	}
 }
