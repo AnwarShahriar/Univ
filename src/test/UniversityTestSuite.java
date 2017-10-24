@@ -273,4 +273,50 @@ public class UniversityTestSuite {
 		
 		assertEquals(true, destroyed);
 	}
+	
+	@Test
+	public void studentDeregistrationSucceedsBeforeTwoWeekPassedAfterTermStarted() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		
+		simulator.termAllowCourseRegistration();
+		versity.registerStudentForCourse(student, course);
+		
+		simulator.startTerm();
+		versity.deregisterCourse(course, student);
+		
+		assertEquals(true, !student.currentCourses().contains(course));
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void studentDeregistrationFailsAfterTwoWeekPassedTillTermStarted() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		
+		simulator.termAllowCourseRegistration();
+		versity.registerStudentForCourse(student, course);
+		
+		simulator.twoWeeksPassesTillTermStarted();
+		versity.deregisterCourse(course, student);
+	}
 }

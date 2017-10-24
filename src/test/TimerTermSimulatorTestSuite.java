@@ -40,8 +40,16 @@ public class TimerTermSimulatorTestSuite {
 			}
 			
 			@Override
+			public void onTwoWeekPassedTillTermStarted() {
+				if (order != 6) {
+					fail();
+				}
+				order += 4;
+			}
+			
+			@Override
 			public void onTermEnded() {
-				if (order != 6) { 
+				if (order != 10) { 
 					fail();
 				}
 				latch.countDown();

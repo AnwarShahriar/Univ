@@ -25,4 +25,8 @@ public class TestTermSimulator extends TermSimulator {
 		listener.onCreate();
 	}
 	
+	public void twoWeeksPassesTillTermStarted() {
+		listener.onTwoWeekPassedTillTermStarted();
+	}
+	
 }
