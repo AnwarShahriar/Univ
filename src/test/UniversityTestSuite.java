@@ -125,6 +125,19 @@ public class UniversityTestSuite {
 				);
 	}
 	
+	@Test
+	public void testUniversityStudentListHasStudents() {
+		versity.createStudent("John", 1);
+		versity.createStudent("Noah", 2);
+		assertEquals(2, versity.students().size());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void attemptToCreateDuplicateStudentWithSameNumberThrowsException() {
+		versity.createStudent("John", 1);
+		versity.createStudent("Noah", 1);
+	}
+	
 	public class TestTermSimulator extends TermSimulator {
 
 		public TestTermSimulator(TermEventListener listener) {

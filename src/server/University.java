@@ -50,8 +50,21 @@ public class University implements TermEventListener {
 		}
 		return false;
 	}
+	
+	public boolean studentExist(int studentNumber) {
+		for (Student s : StudentTable.getInstance().students) {
+			if (s.getStudentNumber() == studentNumber) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Student createStudent(String name, int studentNumber) {
+		if (studentExist(studentNumber)) {
+			String errMsg = String.format("Student with student_number %d already exists", studentNumber);
+			throw new IllegalArgumentException(errMsg);
+		}
 		Student student = new Student(name, studentNumber);
 		StudentTable.getInstance().add(student);
 		return student;
@@ -126,4 +139,7 @@ public class University implements TermEventListener {
 		return CourseTable.getInstance().courses;
 	}
 
+	public List<Student> students() {
+		return StudentTable.getInstance().students;
+	}
 }
