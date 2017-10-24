@@ -79,8 +79,13 @@ public class University implements TermEventListener {
 	}
 
 	public void registerStudentForCourse(Student student, Course course) {
+		if (termState != TermState.COURSE_REGISTRATION_STATE) {
+			String errMsg = "Time for course registration in this term has been passed or not yet been started";
+			throw new IllegalStateException(errMsg);
+		}
 		try {
 			student.registerCourse(course);
+			course.addStudent(student);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			throw e;
@@ -149,5 +154,9 @@ public class University implements TermEventListener {
 
 	public List<Student> students() {
 		return StudentTable.getInstance().students;
+	}
+
+	public void selectCourseForStudent(Student student, Course course) {
+		student.selectCourse(course);
 	}
 }
