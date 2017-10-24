@@ -1,6 +1,5 @@
 package server;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,12 +9,10 @@ import utilities.Trace;
 
 public class University implements TermEventListener {
 	private static final University INSTANCE = new University();
-	Logger logger = Trace.getInstance().getLogger(this);
 	
-	private List<Course> courses = new ArrayList<>();
+	private Logger logger = Trace.getInstance().getLogger(this);
 	
 	private TermState termState = TermState.NONE;
-	
 	private int universityCourseCount = 25; // Default course count 25
 	private int passRate = 70; // Default pass rate is 70
 	
@@ -25,14 +22,28 @@ public class University implements TermEventListener {
 		return INSTANCE;
 	}
 	
-	public Course createCourse(String title, int capsize, boolean hasProject) {
-		Course course = hasProject? new ProjectCourse(title, capsize): new Course(title, capsize);
+	public Course createCourse(
+			String user, 
+			String title, 
+			int code, 
+			int capsize, 
+			boolean hasAFinal, 
+			int numberOfAssignments, 
+			int numberOfMidTerms, 
+			boolean enforcePrereqs, 
+			boolean isProjectCourse) {
+		if (hasCourseExist(code)) {
+			String errMsg = String.format("Course with code %d already exists", code);
+			throw new IllegalArgumentException(errMsg);
+		}
+		CourseInteractor interactor = new CourseInteractor(this);
+		Course course = interactor.createCourse(user, title, code, capsize, hasAFinal, numberOfAssignments, numberOfMidTerms, enforcePrereqs, isProjectCourse);
 		CourseTable.getInstance().add(course);
 		return course;
 	}
 
 	public boolean hasCourseExist(int code) {
-		for (Course c : courses) {
+		for (Course c : CourseTable.getInstance().courses) {
 			if (c.getCode() == code) {
 				return true;
 			}
@@ -110,4 +121,9 @@ public class University implements TermEventListener {
 	public int getPassRate() {
 		return passRate;
 	}
+
+	public List<Course> courses() {
+		return CourseTable.getInstance().courses;
+	}
+
 }

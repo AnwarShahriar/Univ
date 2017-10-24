@@ -29,11 +29,8 @@ public class CourseInteractor {
 		validateGradeElems(hasAFinal, numberOfAssignments, numberOfMidTerms, isProjectCourse);
 		validateCapsize(capsize);
 		
-		if (versity.hasCourseExist(code)) 
-			throw new IllegalArgumentException("Course already exist");
-		
 		logger.info(String.format("Course is created with title %s and capsize %d", title, capsize));
-		Course course = versity.createCourse(title, capsize, isProjectCourse);
+		Course course = isProjectCourse ? new ProjectCourse(title, capsize) : new Course(title, capsize);
 		course.setCode(code);
 		course.setHasAFinal(hasAFinal);
 		course.setNumberOfAssignments(numberOfAssignments);

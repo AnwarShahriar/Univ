@@ -3,9 +3,11 @@ package test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import server.CourseInteractor;
+import server.CourseTable;
+import server.StudentTable;
 import server.University;
 import server.University.TermState;
 import server.common.TermEventListener;
@@ -14,11 +16,15 @@ import server.common.TermSimulator;
 public class UniversityTestSuite {
 	University versity;
 	TestTermSimulator simulator;
+	CourseInteractor interactor;
 	
 	@Before
 	public void setup() {
 		versity = University.getInstance();
 		simulator = new TestTermSimulator(versity);
+		interactor = new CourseInteractor(versity);
+		CourseTable.getInstance().clear();
+		StudentTable.getInstance().clear();
 	}
 	
 	@Test
@@ -75,6 +81,48 @@ public class UniversityTestSuite {
 	@Test(expected = IllegalArgumentException.class)
 	public void universityPassRateSmallerThan_0_ThrowsException() {
 		versity.passRate(-1);
+	}
+	
+	@Test
+	public void testUniversityCourseListHasCourses() {
+		versity.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		assertEquals(1, versity.courses().size());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void attemptToCreateDuplicateCourseWithSameCodeThrowsException() {
+		versity.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+		versity.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
 	}
 	
 	public class TestTermSimulator extends TermSimulator {
