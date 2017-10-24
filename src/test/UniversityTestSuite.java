@@ -45,6 +45,38 @@ public class UniversityTestSuite {
 		assertEquals(TermState.TERM_END_STATE, versity.getTermState());
 	}
 	
+	@Test
+	public void testUniversityCourseCount() {
+		versity.universityCourseCount(20);
+		assertEquals(20, versity.getUniversityCourseCount());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void universityCourseCountGreaterThan_25_ThrowsException() {
+		versity.universityCourseCount(30);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void universityCourseCountSmallerThan_1_ThrowsException() {
+		versity.universityCourseCount(0);
+	}
+	
+	@Test
+	public void testUniversityPassRate() {
+		versity.passRate(65);
+		assertEquals(65, versity.getPassRate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void universityPassRateGreaterThan_100_ThrowsException() {
+		versity.passRate(101);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void universityPassRateSmallerThan_0_ThrowsException() {
+		versity.passRate(-1);
+	}
+	
 	public class TestTermSimulator extends TermSimulator {
 
 		public TestTermSimulator(TermEventListener listener) {

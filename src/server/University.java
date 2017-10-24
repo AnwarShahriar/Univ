@@ -16,6 +16,9 @@ public class University implements TermEventListener {
 	
 	private TermState termState = TermState.NONE;
 	
+	private int universityCourseCount = 25; // Default course count 25
+	private int passRate = 70; // Default pass rate is 70
+	
 	private University() {}
 	
 	public static University getInstance() {
@@ -84,4 +87,27 @@ public class University implements TermEventListener {
 		termState = TermState.TERM_END_STATE;
 	}
 
+	public void universityCourseCount(int count) {
+		if (count < 1 || count > 25) {
+			String errMsg = "University course count must be between 1 and 25";
+			throw new IllegalArgumentException(errMsg);
+		}
+		this.universityCourseCount = count;
+	}
+
+	public int getUniversityCourseCount() {
+		return universityCourseCount;
+	}
+
+	public void passRate(int passRate) {
+		if (passRate < 0 || passRate > 100) {
+			String errMsg = "Pass rate must be between 0 and 100";
+			throw new IllegalArgumentException(errMsg);
+		}
+		this.passRate = passRate;
+	}
+	
+	public int getPassRate() {
+		return passRate;
+	}
 }
