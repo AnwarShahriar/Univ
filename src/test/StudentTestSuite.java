@@ -15,6 +15,7 @@ import server.University;
 public class StudentTestSuite {
 	
 	private static University versity;
+	private TestTermSimulator simulator;
 	
 	@BeforeClass
 	public static void setup() {
@@ -23,6 +24,8 @@ public class StudentTestSuite {
 	
 	@Before
 	public void prepare() {
+		simulator = new TestTermSimulator(versity);
+		simulator.termCreated();
 		StudentTable.getInstance().clear();
 		CourseTable.getInstance().clear();
 		

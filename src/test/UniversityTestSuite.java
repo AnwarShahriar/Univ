@@ -25,6 +25,7 @@ public class UniversityTestSuite {
 		interactor = new CourseInteractor(versity);
 		CourseTable.getInstance().clear();
 		StudentTable.getInstance().clear();
+		simulator.termCreated();
 	}
 	
 	@Test
@@ -138,28 +139,26 @@ public class UniversityTestSuite {
 		versity.createStudent("Noah", 1);
 	}
 	
-	public class TestTermSimulator extends TermSimulator {
-
-		public TestTermSimulator(TermEventListener listener) {
-			super(listener);
-		}
-
-		public void endTerm() {
-			listener.onTermEnded();
-		}
-
-		public void startTerm() {
-			listener.onTermProperlyStarted();
-		}
-
-		public void termAllowCourseRegistration() {
-			listener.onRegistrationPossible();
-		}
-
-		public void termCreated() {
-			listener.onCreate();
-		}
-		
+	@Test(expected = IllegalStateException.class)
+	public void courseCannotBeCreatedAfterTermCourseCreationWindowIsPassed() {
+		simulator.startTerm();
+		versity.createCourse(
+				"clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+				);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void studentCannotBeCreatedAfterTermStudentCreationWindowIsPassed() {
+		simulator.startTerm();
+		versity.createStudent("John", 1);
 	}
 
 }
