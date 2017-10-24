@@ -245,4 +245,32 @@ public class UniversityTestSuite {
 		
 		assertEquals(true, cancelled);
 	}
+	
+	@Test
+	public void destroyCourseSucceeds() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs)
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		
+		simulator.termAllowCourseRegistration();
+		versity.registerStudentForCourse(student, course);
+		
+		versity.destroyCourse(course);
+		boolean destroyed = 
+				!versity.courses().contains(course) && 
+				!student.currentCourses().contains(student) && 
+				!student.selectedCourses().contains(course);
+		
+		
+		assertEquals(true, destroyed);
+	}
 }
