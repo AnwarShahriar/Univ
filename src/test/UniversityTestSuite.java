@@ -240,7 +240,7 @@ public class UniversityTestSuite {
 		versity.cancelCourse(course);
 		boolean cancelled = 
 				!course.students().contains(student) && 
-				!student.currentCourses().contains(student) && 
+				!student.currentCourses().contains(course) && 
 				!student.selectedCourses().contains(course);
 		
 		assertEquals(true, cancelled);
@@ -267,7 +267,7 @@ public class UniversityTestSuite {
 		versity.destroyCourse(course);
 		boolean destroyed = 
 				!versity.courses().contains(course) && 
-				!student.currentCourses().contains(student) && 
+				!student.currentCourses().contains(course) && 
 				!student.selectedCourses().contains(course);
 		
 		
