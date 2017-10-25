@@ -388,4 +388,38 @@ public class UniversityTestSuite {
 		assertEquals(true, versity.dropCourse(student, course));
 	}
 	
+	@Test
+	public void studentTakeCourseSucceeds() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		
+		assertEquals(course, student.selectedCourses().get(0));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void studentTakeSameCourseTwice() {
+		Course course = versity.createCourse("clerk", // user
+				"CS", // title,
+				110022, // code
+				26, // capsize
+				true, // hasAFinal
+				2, // numberOfAssignments,
+				1, // numberOfMidterms,
+				true, // enforcePrereqs
+				false // isProjectCourse
+		);
+		Student student = versity.createStudent("John", 1);
+		versity.selectCourseForStudent(student, course);
+		versity.selectCourseForStudent(student, course);
+	}
 }

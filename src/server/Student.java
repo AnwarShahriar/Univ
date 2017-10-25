@@ -1,5 +1,6 @@
 package server;
 
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +102,11 @@ public class Student {
 	}
 
 	public void selectCourse(Course course) {
+		if (selectedCourses.contains(course)) {
+			String errMsg = String.format("Course %s is already selected and cannot be re-selected", course.title);
+			throw new IllegalArgumentException(errMsg);
+		}
+		
 		if (registeredCourses.contains(course)) {
 			String errMsg = String.format("Course %s is already registered and cannot be selected", course.title);
 			throw new IllegalArgumentException(errMsg);
