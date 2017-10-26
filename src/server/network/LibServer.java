@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
+
+import server.CourseTable;
+import server.StudentTable;
+import server.TimerTermSimulator;
+import server.University;
 import server.logic.handler.InputHandler;
 import server.logic.handler.model.Client;
 import server.logic.handler.model.ServerOutput;
@@ -27,10 +32,18 @@ public class LibServer implements Runnable{
 			clients = new HashMap<Integer, ServerThread>();
 			server = new ServerSocket(port);
 			server.setReuseAddress(true);
+			initUniversity();
 			start();
 		} catch (IOException ioe) {
 			logger.fatal(ioe);
 		}
+	}
+	
+	public void initUniversity() {
+		TimerTermSimulator simulation = new TimerTermSimulator(University.getInstance(), Config.SIMULATED_DAY);
+		CourseTable.getInstance().clear();
+		StudentTable.getInstance().clear();
+		simulation.start();
 	}
 	
 	public void start() {

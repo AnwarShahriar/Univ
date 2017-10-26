@@ -66,6 +66,10 @@ public class University implements TermEventListener {
 	}
 
 	public Student createStudent(String name, int studentNumber) {
+		return createStudent(name, studentNumber, "", "");
+	}
+	
+	public Student createStudent(String name, int studentNumber, String email, String password) {
 		if (termState != TermState.CREATE_STUDENT_COURSE_STATE) {
 			String errMsg = "Student cannot be created because student creation period is over";
 			throw new IllegalStateException(errMsg);
@@ -75,6 +79,8 @@ public class University implements TermEventListener {
 			throw new IllegalArgumentException(errMsg);
 		}
 		Student student = new Student(name, studentNumber);
+		student.setEmail(email);
+		student.setPassword(password);
 		StudentTable.getInstance().add(student);
 		return student;
 	}
@@ -109,26 +115,31 @@ public class University implements TermEventListener {
 	@Override
 	public void onCreate() {
 		termState = TermState.CREATE_STUDENT_COURSE_STATE;
+		System.out.println(termState.name());
 	}
 
 	@Override
 	public void onRegistrationPossible() {
 		termState = TermState.COURSE_REGISTRATION_STATE;
+		System.out.println(termState.name());
 	}
 
 	@Override
 	public void onTermProperlyStarted() {
 		termState = TermState.TERM_PROPERLY_STARTED_STATE;
+		System.out.println(termState.name());
 	}
 	
 	@Override
 	public void onTwoWeekPassedTillTermStarted() {
 		termState = TermState.TWO_WEEK_PASSED_AFTER_TERM_STARTED_STATE;
+		System.out.println(termState.name());
 	}
 
 	@Override
 	public void onTermEnded() {
 		termState = TermState.TERM_END_STATE;
+		System.out.println(termState.name());
 	}
 
 	public void universityCourseCount(int count) {

@@ -28,7 +28,7 @@ public class LibClient implements Runnable{
 			logger.info(String.format("%d : Connected to server: %s", ID,socket.getInetAddress()));
 			logger.info(String.format("%d : Connected to portid: %s", ID,socket.getLocalPort()));
 	    	this.start();
-	    	System.out.println("Welcome To Zhibo's Library!");
+	    	System.out.println("Welcome To the University!");
 	    	System.out.println("Greeting To Start!");
 		} catch(UnknownHostException uhe) {  
 			System.err.println(ID + ": Unknown Host");

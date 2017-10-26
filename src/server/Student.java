@@ -11,6 +11,8 @@ public class Student {
 	private int studentNumber;
 	private boolean fullTime;
 	private int maxCourseCount;
+	private String email;
+	private String password;
 	
 	private List<Course> selectedCourses = new ArrayList<>();
 	private List<Course> completedCourses = new ArrayList<>();
@@ -137,4 +139,19 @@ public class Student {
 		return registeredCourses.remove(course);
 	}
 	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
 }

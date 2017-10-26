@@ -10,8 +10,12 @@ public class InputHandler {
     public static final int STUDENT = 3;
     public static final int CREATESTUDENT=4;
     public static final int CREATECOURSE=5;
+    public static final int CANCELCOURSE=6;
+    public static final int DELETESTUDENT=7;
     public static final int CLERKLOGIN=14;
     public static final int STUDENTLOGIN=15;
+    
+    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student";
     
     OutputHandler outputHandler=new OutputHandler();
 
@@ -21,7 +25,7 @@ public class InputHandler {
 		 Output o = new Output("",0);
 		 ServerOutput oo = new ServerOutput(output,o.getState());
 	        if (state == WAITING) {
-	        	output = "Who Are you?Clerk or User?";
+	        	output = "Who Are you?Clerk or Student?";
 	            state = FINISHWAITING;
 	            oo.setOutput(output);
 	            oo.setState(state);
@@ -31,13 +35,13 @@ public class InputHandler {
 	            	state=CLERKLOGIN;
 	                oo.setOutput(output);
 		            oo.setState(state);
-	            }else if (input.equalsIgnoreCase("user")) {
-	            	output="Please Input Username and Password:'username,password'";
+	            }else if (input.equalsIgnoreCase("student")) {
+	            	output="Please Input Email and Password:'email,password'";
 	            	state=STUDENTLOGIN;
 	                oo.setOutput(output);
 		            oo.setState(state);
 	            }else{
-	            	output = "Who Are you?Clerk or User?";
+	            	output = "Who Are you?Clerk or Student?";
 	            	state = FINISHWAITING;
 	            	oo.setOutput(output);
 		            oo.setState(state);
@@ -56,13 +60,25 @@ public class InputHandler {
 	            oo.setState(state);
 	        }else if (state==CLERK){
 	        	if (input.equalsIgnoreCase("create student")) {
-	            	output = "Please Input Student Info:";
+	            	output = "Please Input Student Info: 'Name, Student Number, Email, Password'";
 	            	state=CREATESTUDENT;
 	            	oo.setOutput(output);
 		            oo.setState(state);
-	            }else if (input.equalsIgnoreCase("create title")) {
-	            	output = "Please Input Title Info:'ISBN,title'";
+	            }else if (input.equalsIgnoreCase("create course")) {
+	            	output = "Please Input Course Info as given format: " + 
+	            			 "\n" +
+	            			 "'Title, Code, Capcity Size, Has Final(True/False), Assignment Count, MidTerm Count, Enforce Prerequisites(True/False), Has Project(True/False)'";
 	            	state=CREATECOURSE;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("cancel course")){
+	            	output = "Please Input Course Code to cancel: ";
+	            	state=CANCELCOURSE;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("delete student")){
+	            	output = "Please Input Student Number to delete: ";
+	            	state=DELETESTUDENT;
 	            	oo.setOutput(output);
 		            oo.setState(state);
 	            }else if(input.equalsIgnoreCase("log out")){
@@ -71,12 +87,12 @@ public class InputHandler {
 	                oo.setOutput(output);
 		            oo.setState(state);
 	            }else if(input.equalsIgnoreCase("main menu")){
-	        		output = "Please select from the menu.Menu:Create Student/Course";
+	        		output = CLERK_MENU;
 	                state = CLERK;
 	                oo.setOutput(output);
 		            oo.setState(state);
 	        	}else{
-	            	output = "Please select from the menu.Menu:Create Student/Course";
+	            	output = CLERK_MENU;
 	                state = CLERK;
 	                oo.setOutput(output);
 		            oo.setState(state);
@@ -92,7 +108,7 @@ public class InputHandler {
 	                oo.setOutput(output);
 		            oo.setState(state);
 	        	}else if(input.equalsIgnoreCase("main menu")){
-	        		output = "What can I do for you?Menu:Create Student/Course";
+	        		output = CLERK_MENU;
 	                state = CLERK;
 	                oo.setOutput(output);
 		            oo.setState(state);
@@ -110,12 +126,48 @@ public class InputHandler {
 	                oo.setOutput(output);
 		            oo.setState(state);
 	        	}else if(input.equalsIgnoreCase("main menu")){
-	        		output = "What can I do for you?Menu:Create Student/Course";
+	        		output = CLERK_MENU;
 	                state = CLERK;
 	                oo.setOutput(output);
 		            oo.setState(state);
 	        	}else{
 	        		o=outputHandler.createCourse(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+	        	}
+	        } else if (state == CANCELCOURSE) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.cancelCourse(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+	        	}
+	        } else if (state == DELETESTUDENT) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.deleteStudent(input);
 	        		output=o.getOutput();
 	        		state=o.getState();
 	        		oo.setOutput(output);
