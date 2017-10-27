@@ -40,4 +40,14 @@ public class StudentTable {
 		}
 		return null;
 	}
+	
+	public static void createFakeStudent() {
+		Student student1 = University.getInstance().createStudent("Jim Gordon", 123123);
+		student1.setEmail("jim@gotham");
+		student1.setPassword("12345");
+		
+		Student student2 = University.getInstance().createStudent("Lee Thompkins", 231231);
+		student2.setEmail("lee@gotham");
+		student2.setPassword("12345");
+	}
 }

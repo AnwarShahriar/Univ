@@ -173,5 +173,9 @@ public class Course {
 		studentIdVsMarksMap.put(student.getStudentNumber(), mark);
 		return mark;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
 
 }

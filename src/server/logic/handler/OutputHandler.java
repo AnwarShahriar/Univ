@@ -19,9 +19,13 @@ public class OutputHandler {
     public static final int DELETESTUDENT=7;
     public static final int CLERKLOGIN=14;
     public static final int STUDENTLOGIN=15;
+    public static final int REGISTERCOURSE=16;
+    public static final int DROPCOURSE=17;
+    public static final int TAKECOURSE=18;
     
-    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student";
-
+    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nMain Menu\nLog Out";
+    private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nMain Menu\nLog Out";
+    
 	public Output createStudent(String input) {
 		Output output=new Output("",0);
 		String[] strArray = null;   
@@ -96,9 +100,10 @@ public class OutputHandler {
         	output.setOutput("Your input should in this format:'email,password'");
         	output.setState(STUDENTLOGIN);
         }else{
-        	Student student = StudentTable.getInstance().findByEmailPassword(strArray[0], strArray[0]);
+        	Student student = StudentTable.getInstance().findByEmailPassword(strArray[0], strArray[1]);
         	if(student != null){
-        		output.setOutput("What can I do for you? Specify what can I do ----->");
+        		InputHandler.loggedInStudentNumber = student.getStudentNumber();
+        		output.setOutput(STUDENT_MENU);
             	output.setState(STUDENT);
         	}else{
         		output.setOutput("Username or Password is wrong! Please, input the Email and Password:'email,password'");
@@ -162,6 +167,90 @@ public class OutputHandler {
 		return output;
 	}
 	
+	public Output registerCourse(String input) {
+		Output output=new Output("",0);
+        if(!isInteger(input)){
+        	output.setOutput("Your input should be Course Code:");
+        	output.setState(REGISTERCOURSE);
+        }else{
+        	int courseCode = Integer.parseInt(input);
+        	Course course = CourseTable.getInstance().findCourseByCode(courseCode);
+        	if (course == null) {
+        		output.setOutput("Fails: No course matches with the course code" 
+        				+ "\n\nYour input should be Course code: ");
+        		output.setState(REGISTERCOURSE);
+        	} else {
+	        	try {
+	        		Student student = StudentTable.getInstance().findByStudentNumber(InputHandler.loggedInStudentNumber);
+	        		University.getInstance().registerStudentForCourse(student, course);
+	        		output.setOutput("Success!");
+	        		output.setState(STUDENT);
+	        	} catch (Exception e) {
+	        		output.setOutput("Fails: " + e.getMessage() 
+	        				+ "\n\nTry again later.");
+	        		output.setState(STUDENT);
+	        	}
+        	}
+        }
+		return output;
+	}
+	
+	public Output dropCourse(String input) {
+		Output output=new Output("",0);
+        if(!isInteger(input)){
+        	output.setOutput("Your input should be Course Code:");
+        	output.setState(DROPCOURSE);
+        }else{
+        	int courseCode = Integer.parseInt(input);
+        	Course course = CourseTable.getInstance().findCourseByCode(courseCode);
+        	if (course == null) {
+        		output.setOutput("Fails: No course matches with the course code" 
+        				+ "\n\nYour input should be Course code: ");
+        		output.setState(DROPCOURSE);
+        	} else {
+	        	try {
+	        		Student student = StudentTable.getInstance().findByStudentNumber(InputHandler.loggedInStudentNumber);
+	        		University.getInstance().dropCourse(student, course);
+	        		output.setOutput("Success!");
+	        		output.setState(STUDENT);
+	        	} catch (Exception e) {
+	        		output.setOutput("Fails: " + e.getMessage() 
+	        				+ "\n\nTry again later.");
+	        		output.setState(STUDENT);
+	        	}
+        	}
+        }
+		return output;
+	}
+	
+	public Output takeCourse(String input) {
+		Output output=new Output("",0);
+        if(!isInteger(input)){
+        	output.setOutput("Your input should be Course Code:");
+        	output.setState(TAKECOURSE);
+        }else{
+        	int courseCode = Integer.parseInt(input);
+        	Course course = CourseTable.getInstance().findCourseByCode(courseCode);
+        	if (course == null) {
+        		output.setOutput("Fails: No course matches with the course code" 
+        				+ "\n\nYour input should be Course code: ");
+        		output.setState(TAKECOURSE);
+        	} else {
+	        	try {
+	        		Student student = StudentTable.getInstance().findByStudentNumber(InputHandler.loggedInStudentNumber);
+	        		University.getInstance().selectCourseForStudent(student, course);
+	        		output.setOutput("Success!");
+	        		output.setState(STUDENT);
+	        	} catch (Exception e) {
+	        		output.setOutput("Fails: " + e.getMessage() 
+	        				+ "\n\nTry again later.");
+	        		output.setState(STUDENT);
+	        	}
+        	}
+        }
+		return output;
+	}
+	
 	public static boolean isInteger(String value) {
 		try {
 			Integer.parseInt(value);
@@ -181,5 +270,5 @@ public class OutputHandler {
 	public boolean isBoolean(String val) {
 		return val.equalsIgnoreCase("true") || val.equalsIgnoreCase("false");
 	}
-	
+
 }

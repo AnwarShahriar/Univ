@@ -44,6 +44,9 @@ public class LibServer implements Runnable{
 		CourseTable.getInstance().clear();
 		StudentTable.getInstance().clear();
 		simulation.start();
+		
+		CourseTable.createFakeCourse();
+		StudentTable.createFakeStudent();
 	}
 	
 	public void start() {

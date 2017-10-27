@@ -1,5 +1,12 @@
 package server.logic.handler;
 
+import java.util.List;
+
+import server.Course;
+import server.CourseTable;
+import server.Student;
+import server.StudentTable;
+import server.University;
 import server.logic.handler.model.Output;
 import server.logic.handler.model.ServerOutput;
 
@@ -14,11 +21,16 @@ public class InputHandler {
     public static final int DELETESTUDENT=7;
     public static final int CLERKLOGIN=14;
     public static final int STUDENTLOGIN=15;
+    public static final int REGISTERCOURSE=16;
+    public static final int DROPCOURSE=17;
+    public static final int TAKECOURSE=18;
     
-    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student";
+    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nMain Menu\nLog Out";
+    private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nMain Menu\nLog Out";
     
     OutputHandler outputHandler=new OutputHandler();
 
+    public static int loggedInStudentNumber = 0;
 
 	public ServerOutput processInput(String input, int state) {
 		 String output = "";
@@ -98,8 +110,66 @@ public class InputHandler {
 		            oo.setState(state);
 	            }
 	        }else if (state==STUDENT){
-	        	
-	        	// Implement Student related feature
+	        	if (input.equalsIgnoreCase("register course")) {
+	        		Student student = StudentTable.getInstance().findByStudentNumber(loggedInStudentNumber);
+	        		List<Course> courses = student.selectedCourses();
+	        		if (courses.size() == 0) {
+	        			output = "\n=> There is no selected course to register\n" + STUDENT_MENU;
+		            	state=STUDENT;
+	        		} else {
+	        			output = "\nPlease input Course Code from the selected courses below to register:\n"; 
+	        			for (Course course: courses) {
+	        				output += String.format("Title: %s, Code: %d\n", course.getTitle(), course.getCode());
+	        			}
+	        			state=REGISTERCOURSE;
+	        		}
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if (input.equalsIgnoreCase("drop course")) {
+	            	Student student = StudentTable.getInstance().findByStudentNumber(loggedInStudentNumber);
+	        		List<Course> courses = student.currentCourses();
+	        		if (courses.size() == 0) {
+	        			output = "\n=> There is no registered course to drop\n" + STUDENT_MENU;
+		            	state=STUDENT;
+	        		} else {
+	        			output = "\nPlease input Course Code from the registered courses below to drop:\n"; 
+	        			for (Course course: courses) {
+	        				output += String.format("Title: %s, Code: %d\n", course.getTitle(), course.getCode());
+	        			}
+	        			state=DROPCOURSE;
+	        		}
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("take course")){
+	        		List<Course> courses = University.getInstance().courses();
+	        		if (courses.size() == 0) {
+	        			output = "\n=> There is no course to select\n" + STUDENT_MENU;
+		            	state=STUDENT;
+	        		} else {
+	        			output = "\nPlease input Course Code from the courses below to select:\n"; 
+	        			for (Course course: courses) {
+	        				output += String.format("Title: %s, Code: %d\n", course.getTitle(), course.getCode());
+	        			}
+	        			state=TAKECOURSE;
+	        		}
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("main menu")){
+	        		output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	            	output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	            }
 	        
 	        }else if(state==CREATESTUDENT){
 	        	if(input.equalsIgnoreCase("log out")){
@@ -168,6 +238,60 @@ public class InputHandler {
 		            oo.setState(state);
 	        	}else{
 	        		o=outputHandler.deleteStudent(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+	        	}
+	        } else if (state == REGISTERCOURSE) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.registerCourse(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+	        	}
+	        } else if (state == DROPCOURSE) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.dropCourse(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+	        	}
+	        } else if (state == TAKECOURSE) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.takeCourse(input);
 	        		output=o.getOutput();
 	        		state=o.getState();
 	        		oo.setOutput(output);

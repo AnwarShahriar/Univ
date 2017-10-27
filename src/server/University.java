@@ -215,7 +215,7 @@ public class University implements TermEventListener {
 
 	public boolean dropCourse(Student student, Course course) {
 		if (termState != TermState.TWO_WEEK_PASSED_AFTER_TERM_STARTED_STATE) {
-			String errMsg = "Cannot drop a course before two weeks has been passed since course registration";
+			String errMsg = "Cannot drop a course before two weeks has been passed since term started properly";
 			throw new IllegalStateException(errMsg);
 		}
 		return student.dropCourse(course);
